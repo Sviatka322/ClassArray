@@ -9,7 +9,7 @@ private:
 public:
 	Array(int size = 5) : m_size(size), m_array(new int[m_size]) {}
 
-	Array(Array& array) : m_size(array.m_size), m_array(new int[m_size]) {}
+	Array(Array& array) : m_size(array.m_size), m_array(new int[m_size]) //переписати
 	{
 		for (int i = 0; i < array.m_size; i++)
 		{
@@ -41,21 +41,35 @@ public:
 
 	int search(int element)
 	{
-
+		for (int i = 0; i < m_size; i++)
+		{
+			if (m_array[i] == element)
+			{
+				return i;
+			}
+			else if (i == m_size - 1)
+			{
+				return -1;
+			}
+		}
 	}
 
 	void print()
 	{
+		for (int i = 0; i < m_size; i++)
+		{
+			std::cout << m_array[i] << ' ';
+		}
 
+		std::cout << '\n';
 	}
 
 	void push()
 	{
 		for (int i = 0; i < m_size; i++)
 		{
-			std::cout << "Enter " << i + 1 << "element:";
+			std::cout << "Enter " << i + 1 << " element: ";
 			std::cin >> m_array[i];
-			std::cout << '\n';
 		}
 	}
 
@@ -101,16 +115,40 @@ public:
 
 std::ostream& operator<<(std::ostream& os, Array& array)
 {
+	for (int i = 0; i < array.m_size; i++)
+	{
+		os << array.m_array[i] << " ";
+	}
 
+	return os;
 }
 
 std::istream& operator>>(std::istream& is, Array& array)
 {
-	
+	for (int i = 0; i < array.m_size; i++)
+	{
+		std::cout << "Enter " << i + 1 << " element: ";
+		is >> array.m_array[i];
+	}
+
+	return is;
 }
 
 int main()
 {
+	Array arr1;
+
+	std::cin >> arr1;
+
+	arr1.print();
+	
+	std::cout << arr1.search(5) << '\n';
+
+	arr1.sort();
+
+	std::cout << arr1 << '\n';
+
+	std::cout << arr1.search(6) << '\n';
 
 	system("pause");
 	return 0;
