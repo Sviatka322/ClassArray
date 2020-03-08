@@ -51,6 +51,10 @@ public:
 			{
 				return -1;
 			}
+			else
+			{
+				continue;
+			}
 		}
 	}
 
@@ -73,10 +77,7 @@ public:
 		}
 	}
 
-	Array operator+(Array& array)
-	{
-
-	}
+	friend Array operator+(Array& array, Array& array1);
 
 	Array operator==(Array& array)
 	{
@@ -93,14 +94,9 @@ public:
 
 	}
 
-	void operator=(Array& array)
-	{
-
-	}
-
 	int operator[](int i)
 	{
-
+		return 1;
 	}
 
 
@@ -134,6 +130,30 @@ std::istream& operator>>(std::istream& is, Array& array)
 	return is;
 }
 
+Array operator+(Array& array, Array& array1)
+{
+	int* t_array = new int[array.m_size];
+
+	for (int i = 0; i < array.m_size; i++)
+	{
+		t_array[i] = array.m_array[i];
+	}
+
+	array.m_array = new int[array.m_size + array1.m_size];
+
+	for (int i = 0; i < array.m_size; i++)
+	{
+		array.m_array[i] = t_array[i];
+	}
+
+	for (int i = array.m_size, j = 0; i < (array.m_size + array1.m_size); i++, j++)
+	{
+		array.m_array[i] = array1.m_array[j];
+	}
+
+	return array;
+}
+
 int main()
 {
 	Array arr1;
@@ -149,6 +169,17 @@ int main()
 	std::cout << arr1 << '\n';
 
 	std::cout << arr1.search(6) << '\n';
+
+	Array arr2(7);
+	std::cin >> arr2;
+
+	std::cout << arr2 << '\n';
+
+	Array arr3;
+
+	arr3 = arr1 + arr2;
+
+	std::cout << arr3;
 
 	system("pause");
 	return 0;
